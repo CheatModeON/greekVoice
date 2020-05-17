@@ -34,7 +34,7 @@ main {
   margin-bottom: 2em;
   padding-top: 4em;
   text-align: center;
-  padding-bottom: 4rem;
+  padding-bottom: 3.5rem;
 
 }
 @keyframes bg-pulse {
@@ -106,8 +106,8 @@ footer {
   background: white;
   position: fixed;
   bottom:0;
-  width:98%;
-  height: 4rem;
+  width: calc(100% - 2em);
+  height: 3.5rem;
   border-top: 1px solid #0d122b;
   text-align: center;
 }

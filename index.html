@@ -10,6 +10,9 @@ https://guess-the-movie-dev.netlify.app/game
 https://browser-recognition.glitch.me/
 https://mdn.github.io/web-speech-api/speech-color-changer/
 
+https://github.com/mdn/web-speech-api/blob/master/speech-color-changer/script.js
+https://github.com/philnash/web-assistant
+https://www.twilio.com/blog/speech-recognition-browser-web-speech-api
 -->
 <html lang="en">
   <head>
@@ -18,6 +21,9 @@ https://mdn.github.io/web-speech-api/speech-color-changer/
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Browser speech recognition</title>
     <link rel="stylesheet" href="./style.css" />
+    <link rel="icon"
+      type="image/png"
+      href="myicon.png">
   </head>
   <body>
     <header>
@@ -28,28 +34,33 @@ https://mdn.github.io/web-speech-api/speech-color-changer/
     <main>
       <div class="article">
         <img src="https://assetsds.cdnedge.bluemix.net/sites/default/files/styles/big_2/public/feature/images/bw_inequality_source_-_marketing-mojo.jpg" height="300px" width="300px"></img>
-        <br><h2 class="title">Τα δέντρα και τα πουλιά</h2>
+        <br><h2 class="greekVoice">Τα δέντρα και τα πουλιά</h2>
         <br><span>ασδασδασδα ασδδασδσαδ φγεργρτηυτηεςρ ςφφδσ ηγτρηρτφγ δφδ τηεςρ ςφφδσ ηγτρηρτφγ δφδ</span>
       </div>
       <div class="article">
         <img src="https://assetsds.cdnedge.bluemix.net/sites/default/files/styles/big_2/public/feature/images/bw_inequality_source_-_marketing-mojo.jpg" height="300px" width="300px"></img>
-        <br><h2 class="title">Βόλτα στο βουνό</h2>
+        <br><h2 class="greekVoice">Βόλτα στο βουνό</h2>
         <br><span>ασδασδασδα ασδδασδσαδ φγεργρτηυτηεςρ ςφφδσ ηγτρηρτφγ δφδ τηεςρ ςφφδσ ηγτρηρτφγ δφδ</span>
       </div>
       <div class="article">
         <img src="https://assetsds.cdnedge.bluemix.net/sites/default/files/styles/big_2/public/feature/images/bw_inequality_source_-_marketing-mojo.jpg" height="300px" width="300px"></img>
-        <br><h2 class="title">Καλημέρα Ελλάδα</h2>
+        <br><h2 class="greekVoice">Καλημέρα Ελλάδα</h2>
         <br><span>ασδασδασδα ασδδασδσαδ φγεργρτηυτηεςρ ςφφδσ ηγτρηρτφγ δφδ τηεςρ ςφφδσ ηγτρηρτφγ δφδ</span>
       </div>
     </main>
 
 
+
+    <script>
+
+    </script>
+
     <div id="speechRec">
 
-    <button id="button">REC</button>
+    <button id="button" onmouseover="PlaySound('click')" onmouseout="StopSound('click')">REC</button>
     <div id="result"></div>
       <p id="message" hidden aria-hidden="true">
-        Η αναγνώριση φωνής δεν υποστιρίζεται από τον περιηγητήσας. <!--Your browser doesn't support Speech Recognition. Sorry.-->
+        Η αναγνώριση φωνής δεν υποστιρίζεται από τον περιηγητή σας. <!--Your browser doesn't support Speech Recognition. Sorry.-->
       </p>
     </div>
 
@@ -59,84 +70,15 @@ https://mdn.github.io/web-speech-api/speech-color-changer/
 </div>
 
 
-
-<script>
-function toggle() {
-  var x = document.getElementById("speechRec");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-</script>
     <footer>
       <div>
         <p> <a href="https://github.com/cheatmodeon">CheatModeON</a></p>
       </div>
 
     </footer>
-    <script>
-      window.addEventListener("DOMContentLoaded", () => {
-        const button = document.getElementById("button");
-        const result = document.getElementById("result");
-        const main = document.getElementsByTagName("main")[0];
-        let listening = false;
-        const SpeechRecognition =
-          window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (typeof SpeechRecognition !== "undefined") {
-          const recognition = new SpeechRecognition();
-          recognition.lang = 'el-GR';
 
-          const stop = () => {
-            main.classList.remove("speaking");
-            recognition.stop();
-            button.textContent = "REC";
 
-            var articles = document.getElementsByClassName("title");
-
-            for(var i = 0; i< articles.length; i++){
-              articles[i].style.border = "hidden";
-            }
-            for(var i = 0; i< articles.length; i++){
-              if( articles[i].innerText.toLowerCase() == document.getElementById("result").innerText.toLowerCase() ){
-                articles[i].style.border = "thick solid #000000";
-              }
-            }
-          };
-
-          const start = () => {
-            main.classList.add("speaking");
-            recognition.start();
-            button.textContent = "STOP";
-          };
-
-          const onResult = event => {
-            result.innerHTML = "";
-            for (const res of event.results) {
-              const text = document.createTextNode(res[0].transcript);
-              const p = document.createElement("p");
-              if (res.isFinal) {
-                p.classList.add("final");
-              }
-              p.appendChild(text);
-              result.appendChild(p);
-            }
-          };
-          recognition.continuous = true;
-          recognition.interimResults = true;
-          recognition.addEventListener("result", onResult);
-          button.addEventListener("click", event => {
-            listening ? stop() : start();
-            listening = !listening;
-          });
-        } else {
-          button.remove();
-          const message = document.getElementById("message");
-          message.removeAttribute("hidden");
-          message.setAttribute("aria-hidden", "false");
-        }
-      });
-    </script>
   </body>
+
+  <script src="greekVoice.js"></script>
 </html>
